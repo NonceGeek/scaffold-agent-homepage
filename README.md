@@ -1,4 +1,4 @@
-# Scaffold AI Agent Worker
+# Scaffold Agent Homepage
 
 > [https://scaffold-agent-workers.leeduckgo.com/](https://scaffold-agent-workers.leeduckgo.com/)
 >

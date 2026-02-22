@@ -3,20 +3,14 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Menu, X, LogOut } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
-import { WalletSelectionModal } from "@/components/wallet-selection-modal";
-import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import packageJson from "../package.json";
 
 export function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { account, connected, disconnect } = useWallet();
-
-  // Format address for display (e.g., 0x1234...5678)
-  const formatAddress = (address: string) => {
-    return `${address.slice(0, 6)}...${address.slice(-4)}`;
-  };
+  const HOMEPAGE_NAME = packageJson.config.homepageName;
 
   return (
     <header className="border-b border-border relative">
@@ -29,7 +23,7 @@ export function Header() {
             height={32}
             className="rounded-full"
           />
-          <span>Scaffold AI Agent Worker</span>
+          <span>{HOMEPAGE_NAME}</span>
         </Link>
         
         {/* Desktop Navigation */}
@@ -38,7 +32,7 @@ export function Header() {
             Home
           </Link>
           <a 
-            href="https://docs.movementnetwork.xyz/devs" 
+            href="https://backend.ai-market.leeduckgo.com/v2/docs/html" 
             target="_blank" 
             rel="noopener noreferrer"
             className="text-foreground hover:text-primary transition-colors"
@@ -46,22 +40,6 @@ export function Header() {
             Docs
           </a>
           <ThemeToggle />
-          {connected && account?.address ? (
-            <div className="flex items-center space-x-2">
-              <span className="text-sm text-muted-foreground font-mono">
-                {formatAddress(account.address.toString())}
-              </span>
-              <Button variant="ghost" size="icon" onClick={disconnect} title="Disconnect">
-                <LogOut className="h-4 w-4" />
-              </Button>
-            </div>
-          ) : (
-            <WalletSelectionModal>
-              <Button variant="outline" size="sm">
-                Connect Wallet
-              </Button>
-            </WalletSelectionModal>
-          )}
         </nav>
 
         {/* Mobile Navigation Toggle */}
@@ -93,36 +71,6 @@ export function Header() {
             >
               Docs
             </a>
-            <div className="pt-2 border-t border-border">
-              {connected && account?.address ? (
-                <div className="flex items-center justify-between py-2">
-                  <span className="text-sm text-muted-foreground font-mono">
-                    {formatAddress(account.address.toString())}
-                  </span>
-                  <Button 
-                    variant="ghost" 
-                    size="sm" 
-                    onClick={() => {
-                      disconnect();
-                      setMobileMenuOpen(false);
-                    }}
-                  >
-                    <LogOut className="h-4 w-4 mr-2" />
-                    Disconnect
-                  </Button>
-                </div>
-              ) : (
-                <WalletSelectionModal>
-                  <Button 
-                    variant="outline" 
-                    className="w-full"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Connect Wallet
-                  </Button>
-                </WalletSelectionModal>
-              )}
-            </div>
           </nav>
         </div>
       )}
