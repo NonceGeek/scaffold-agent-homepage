@@ -1,257 +1,139 @@
-# Movement Network Connect Wallet Template
+# Scaffold Agent Homepage
 
-A production-ready Next.js template for building decentralized applications (dApps) on Movement Network with comprehensive wallet integration, network switching, message signing, and transaction capabilities.
+A configurable Next.js scaffold for building AI Agent homepages with a built-in chat interface powered by [Deep Chat](https://github.com/OvidijusParsiunas/deep-chat).
 
-## ✨ Features
+## Configuration
 
-- **🔌 Wallet Connectivity**: Support for AIP-62 compatible wallets
-- **🌐 Network Management**: Seamless switching between Movement Network mainnet and testnet
-- **✍️ Message Signing**: "Hello World" message signing with signature display
-- **💸 Token Transfers**: Native MOVE token transfer functionality (1 MOVE default)
-- **🎨 Modern UI**: Built with shadcn/ui components and Tailwind CSS
-- **📱 Responsive Design**: Mobile-first approach with beautiful microinteractions
-- **🌙 Theme Support**: Light/dark mode with system preference detection
-- **⚡ TypeScript**: Full type safety with Aptos SDK integration
+> Update the value in thie part will change the value on the app automatically😎.
+> 
+> 修改此处的 Value，程序中对应的值会自动更新。
 
-## 🚀 Quick Start
+* **homepageName**
+  * **description:** Display name shown in the header, footer, and page title
+  * **value:** `"LeanCoder"`
+
+* **fullName**
+  * **description:** Full agent name shown on the profile card
+  * **value:** `"轻量程序生成大师LeanCoder"`
+
+* **twitterUrl**
+  * **description:** Twitter/X profile URL shown in the footer
+  * **value:** `"https://x.com/0xleeduckgo"`
+
+* **twitterNicename**
+  * **description:** Display name for the Twitter link in the footer
+  * **value:** `"leeduckgo@NonceGeek"`
+
+* **descriptionMarkdown**
+  * **description:** Agent description in markdown (supports bold, links, newlines)
+  * **value:** `"Generate a micro pragram as a real human programmer, \n像人类工程师一样帮你生成轻量级的程序。"`
+
+* **agentAddress**
+  * **description:** On-chain address displayed on the profile card.
+  * **value:** `"0x5cf8ed0e6b49da5d87ba69c4e50aa9b78c57bf0dd446f9889c8f8b5e57b0f336"`
+
+* **freeTierDescription**
+  * **description:** Description text for the free tier card
+  * **value:** `"Chat with the LeanCoder for free. Generate the micro program automatically!\n与LeanCoder免费聊天，自动生成微程序！"`
+
+* **freeTierLink**
+  * **description:** Link target for the free tier button
+  * **value:** `"/chat"`
+
+* **agentTags**
+  * **description:** Array of tag labels shown on the profile card
+  * **value:** `["Coder", "Web3er"]`
+
+* **premiumTierDescription**
+  * **description:** Description for the premium tier card (supports markdown with images and links)
+  * **value:** ` "For Example, you could submit the prompt like that:\n 例如，你可以像这样提交你的 Prompt：\n「Generate an online letter for my fans and record the number of visits, and deploy it to my domain: https://letter.leeduckgo.com.」\n💡微信扫码进一步沟通：\n![my_qr_code](https://dimsum-utils.oss-cn-guangzhou.aliyuncs.com/leeduckgo/qr_code2.png)\n或者给我发送私信：[https://x.com/0xleeduckgo](https://x.com/0xleeduckgo)"`
+
+* **chatbotDescription**
+  * **description:** Subtitle text on the `/chat` page
+  * **value:** `"Talk to LeanCoder if you have any questions about programming."`
+
+* **chatbotIntroMessage**
+  * **description:** Initial greeting message in the chat window
+  * **value:** `"你好！我是 LeanCoder轻量级程序编写大师~ 你有什么问题都可以问我哦~"`
+
+* **chatApiUrl**
+  * **description:** Backend API endpoint for the chat
+  * **value:** `"https://api.scaffold-agent-homepage.leeduckgo.com/api/chat"`
+
+
+## Quick Start
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - npm, yarn, or pnpm
-- AIP-62 compatible wallet (Petra, Nightly, Martian, etc.)
 
 ### Installation
 
-1. **Fork or clone this repository**
-   ```bash
-   git clone https://github.com/yourusername/movement-connectwallet-template.git
-   cd movement-connectwallet-template
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   # or
-   yarn install
-   # or
-   pnpm install
-   ```
-
-3. **Start the development server**
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   # or
-   pnpm dev
-   ```
-
-4. **Open your browser**
-   Navigate to [http://localhost:3000](http://localhost:3000)
-
-## 🏗️ Project Structure
-
-```
-movement-connectwallet-template/
-├── app/                          # Next.js App Router
-│   ├── globals.css              # Global styles and Tailwind CSS
-│   ├── layout.tsx               # Root layout with providers
-│   └── page.tsx                 # Main page component
-├── components/                   # React components
-│   ├── ui/                      # shadcn/ui components
-│   ├── header.tsx               # Application header
-│   ├── wallet-provider.tsx      # Aptos wallet adapter provider
-│   ├── wallet-selection-modal.tsx # Custom wallet selection modal
-│   ├── wallet-demo-content.tsx  # Main wallet interaction interface
-│   ├── switch-network.tsx       # Network switching component
-│   ├── sign-message.tsx         # Message signing functionality
-│   ├── send-transaction.tsx     # Token transfer component
-│   └── theme-toggle.tsx         # Theme switching component
-├── lib/                         # Utility functions
-├── types/                       # TypeScript type definitions
-├── hooks/                       # Custom React hooks
-└── public/                      # Static assets
+```bash
+git clone <your-repo-url>
+cd main
+npm install
 ```
 
-## 🔧 Configuration
-
-### Movement Network Configuration
-
-The template is pre-configured for Movement Network with the following settings:
-
-- **Mainnet**: Chain ID 126, RPC: `https://full.mainnet.movementinfra.xyz/v1`
-- **Testnet**: Chain ID 250, RPC: `https://full.testnet.movementinfra.xyz/v1`
-
-Configuration is handled in `components/wallet-provider.tsx`:
-
-```typescript
-const aptosConfig = new AptosConfig({
-  network: Network.MAINNET,
-  fullnode: "https://full.mainnet.movementinfra.xyz/v1",
-});
-```
-
-### Environment Variables
-
-Create a `.env.local` file in the root directory for custom configurations:
-
-```env
-# Optional: Custom RPC endpoints
-NEXT_PUBLIC_MAINNET_RPC=https://full.mainnet.movementinfra.xyz/v1
-NEXT_PUBLIC_TESTNET_RPC=https://full.testnet.movementinfra.xyz/v1
-
-# Optional: Custom chain IDs
-NEXT_PUBLIC_MAINNET_CHAIN_ID=126
-NEXT_PUBLIC_TESTNET_CHAIN_ID=250
-```
-
-## 💼 Wallet Integration
-
-### Supported Wallets
-
-This template supports all AIP-62 compatible wallets:
-
-- **Petra** - Official Aptos wallet
-- **Nightly** - Multi-chain wallet with Movement Network support
-- **Martian** - Aptos ecosystem wallet
-- **Pontem** - Aptos DeFi wallet
-- **Any other AIP-62 compatible wallet**
-
-### Wallet Connection Flow
-
-1. **Click "Connect Wallet"** on the homepage
-2. **Select your wallet** from the custom modal
-3. **Approve connection** in your wallet
-4. **Start interacting** with Movement Network features
-
-### Custom Wallet Modal
-
-The template includes a custom wallet selection modal built with shadcn/ui components, giving you full control over the design and user experience without being tied to specific UI frameworks.
-
-## 🌐 Network Management
-
-### Switching Networks
-
-- **Mainnet**: Production environment with real MOVE tokens
-- **Testnet**: Development environment with test MOVE tokens
-
-The network switcher automatically:
-- Updates the application state
-- Synchronizes with your connected wallet
-- Provides visual feedback for the current network
-- Handles network-specific configurations
-
-### Network Detection
-
-The template automatically detects and displays:
-- Current network name
-- Chain ID
-- Connection status
-- Network-specific features
-
-## 🔐 Message Signing
-
-### Sign "Hello World" Message
-
-1. **Connect your wallet** to the application
-2. **Navigate to the Sign Message section**
-3. **Click "Sign Message"**
-4. **Approve the signature request** in your wallet
-5. **View the signed message and signature**
-
-This feature is perfect for:
-- Verifying wallet connectivity
-- Testing signature capabilities
-- Building authentication flows
-- Educational purposes
-
-## 💸 Token Transfers
-
-### Send MOVE Tokens
-
-1. **Ensure you have MOVE tokens** in your wallet
-2. **Enter the recipient address** (valid Movement Network address)
-3. **Confirm the 1 MOVE amount** (pre-filled for convenience)
-4. **Approve the transaction** in your wallet
-5. **Monitor transaction status** with real-time updates
-
-### Transaction Features
-
-- **Pre-filled amount**: 1 MOVE token (easily customizable)
-- **Address validation**: Ensures valid Movement Network addresses
-- **Transaction confirmation**: Clear confirmation before submission
-- **Status tracking**: Real-time updates on transaction progress
-- **Success feedback**: Toast notifications and transaction details
-
-## 🎨 UI Components
-
-### Built with shadcn/ui
-
-The template uses shadcn/ui components for a consistent, accessible, and beautiful user interface:
-
-- **Button**: Multiple variants and sizes
-- **Card**: Clean content containers
-- **Dialog**: Modal components
-- **Dropdown**: Network selection
-- **Toast**: Notification system
-- **Theme toggle**: Light/dark mode switching
-
-### Customization
-
-All components are fully customizable:
-- Modify colors and themes in `app/globals.css`
-- Customize component variants in individual component files
-- Add new components following the existing patterns
-- Override default styles with Tailwind CSS classes
-
-## 🚀 Development
-
-### Available Scripts
+### Development
 
 ```bash
-# Development
-npm run dev          # Start development server with Turbopack
-npm run build        # Build for production
-npm run start        # Start production server
-
-# Code Quality
-npm run lint         # Run ESLint
-npm run lint:fix     # Fix ESLint issues
-npm run format       # Format code with Prettier
-npm run format:check # Check code formatting
+npm run dev
 ```
 
-### Adding New Features
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-1. **Create new components** in the `components/` directory
-2. **Add new pages** in the `app/` directory
-3. **Extend wallet functionality** in `components/wallet-provider.tsx`
-4. **Add new UI components** using shadcn/ui patterns
+### Build
 
+```bash
+npm run build
+npm run start
+```
 
-## 🤝 Contributing
+## Project Structure
 
-1. **Fork the repository**
-2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
-3. **Commit your changes** (`git commit -m 'Add amazing feature'`)
-4. **Push to the branch** (`git push origin feature/amazing-feature`)
-5. **Open a Pull Request**
+```
+main/
+├── app/
+│   ├── page.tsx              # Homepage
+│   ├── chat/page.tsx         # Chat page (Deep Chat UI)
+│   ├── layout.tsx            # Root layout with providers
+│   └── globals.css           # Global styles
+├── components/
+│   ├── ui/                   # shadcn/ui base components
+│   ├── header.tsx            # Site header with navigation
+│   ├── agent-profile-card.tsx # Agent profile card component
+│   ├── free-tier-card.tsx    # Free tier feature card
+│   ├── premium-tier-card.tsx # Premium tier feature card
+│   ├── theme-provider.tsx    # Theme provider (light/dark)
+│   └── theme-toggle.tsx      # Theme toggle button
+├── hooks/                    # Custom React hooks
+├── lib/                      # Utility functions
+├── public/                   # Static assets (avatar, icons)
+└── package.json              # Dependencies and config
+```
 
-## 📄 License
+## Available Scripts
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+```bash
+npm run dev            # Start dev server with Turbopack
+npm run build          # Production build
+npm run start          # Start production server
+npm run lint           # Run ESLint
+npm run lint:fix       # Auto-fix lint issues
+npm run format         # Format with Prettier
+npm run format:check   # Check formatting
+```
 
-## 🙏 Acknowledgments
+## Tech Stack
 
-- [Movement Network](https://movementnetwork.xyz/) for building an amazing blockchain
-- [Aptos Labs](https://aptoslabs.com/) for the excellent SDK and wallet adapter
-- [shadcn/ui](https://ui.shadcn.com/) for the beautiful component library
-- [Next.js](https://nextjs.org/) for the powerful React framework
+- [Next.js](https://nextjs.org/) — React framework
+- [Tailwind CSS](https://tailwindcss.com/) — Utility-first CSS
+- [shadcn/ui](https://ui.shadcn.com/) — UI component library
+- [Deep Chat](https://github.com/OvidijusParsiunas/deep-chat) — AI chat component
+- [next-themes](https://github.com/pacocoursey/next-themes) — Dark/light mode
 
-## 📞 Support
+## License
 
-- **GitHub Issues**: [Report bugs or request features](https://github.com/yourusername/movement-connectwallet-template/issues)
-- **Documentation**: Check the [Movement Network docs](https://docs.movementnetwork.xyz/)
-
-
+MIT

@@ -1,21 +1,8 @@
-"use client";
-
 import { Header } from "@/components/header";
 import { AgentProfileCard } from "@/components/agent-profile-card";
 import { FreeTierCard } from "@/components/free-tier-card";
 import { PremiumTierCard } from "@/components/premium-tier-card";
-import packageJson from "../package.json";
-
-const AGENT_ADDRESS = packageJson.config.agentAddress;
-const HOMEPAGE_NAME = packageJson.config.homepageName;
-const FULL_NAME = packageJson.config.fullName;
-const TWITTER_URL = packageJson.config.twitterUrl;
-const TWITTER_NICENAME = packageJson.config.twitterNicename;
-const DESCRIPTION_MARKDOWN = packageJson.config.descriptionMarkdown;
-const FREE_TIER_DESCRIPTION = packageJson.config.freeTierDescription;
-const FREE_TIER_LINK = packageJson.config.freeTierLink;
-const AGENT_TAGS = packageJson.config.agentTags;
-const PREMIUM_TIER_DESCRIPTION = packageJson.config.premiumTierDescription;
+import { getReadmeConfig } from "@/lib/readme-config";
 
 const markdownToHtml = (markdown: string) => {
   const escaped = markdown
@@ -33,19 +20,21 @@ const markdownToHtml = (markdown: string) => {
 };
 
 export default function Home() {
+  const config = getReadmeConfig();
+
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      <Header />
+      <Header homepageName={config.homepageName} />
 
       <main className="flex-1 container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto text-center space-y-8">
           <div className="space-y-4">
             <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-5xl">
-              {HOMEPAGE_NAME}
+              {config.homepageName}
             </h1>
             <p
               className="text-xl text-muted-foreground"
-              dangerouslySetInnerHTML={{ __html: markdownToHtml(DESCRIPTION_MARKDOWN) }}
+              dangerouslySetInnerHTML={{ __html: markdownToHtml(config.descriptionMarkdown) }}
             />
             <p
               className="text-xl text-muted-foreground"
@@ -58,34 +47,34 @@ export default function Home() {
         <br></br>
         {/* Agent Profile Card */}
         <AgentProfileCard
-          name={FULL_NAME}
-          description={DESCRIPTION_MARKDOWN}
-          address={AGENT_ADDRESS}
-          tags={AGENT_TAGS}
+          name={config.fullName}
+          description={config.descriptionMarkdown}
+          address={config.agentAddress}
+          tags={config.agentTags}
         />
         <br></br>
         {/* Free Tier: ChatBot Access */}
         <FreeTierCard
-          description={FREE_TIER_DESCRIPTION}
-          link={FREE_TIER_LINK}
-          chatbotName={HOMEPAGE_NAME}
+          description={config.freeTierDescription}
+          link={config.freeTierLink}
+          chatbotName={config.homepageName}
         />
         <br></br>
         {/* Premium Tier */}
-        <PremiumTierCard description={PREMIUM_TIER_DESCRIPTION} />
+        <PremiumTierCard description={config.premiumTierDescription} />
       </main>
 
       <footer className="border-t border-border mt-auto">
         <div className="container mx-auto px-4 py-6 text-center text-sm text-muted-foreground">
           <p>
-            {HOMEPAGE_NAME} by{" "}
+            {config.homepageName} by{" "}
             <a
-              href={TWITTER_URL}
+              href={config.twitterUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="underline hover:text-foreground transition-colors"
             >
-              {TWITTER_NICENAME}
+              {config.twitterNicename}
             </a>
           </p>
         </div>

@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import packageJson from "../package.json";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { getReadmeConfig } from "@/lib/readme-config";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,9 +15,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const config = getReadmeConfig();
+
 export const metadata: Metadata = {
-  title: packageJson.config.homepageName,
-  description: packageJson.config.descriptionMarkdown,
+  title: config.homepageName,
+  description: config.descriptionMarkdown,
   icons: {
     icon: "/avatar.png",
     shortcut: "/avatar.png",

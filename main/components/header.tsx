@@ -6,11 +6,13 @@ import Link from "next/link";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
-import packageJson from "../package.json";
 
-export function Header() {
+type HeaderProps = {
+  homepageName: string;
+};
+
+export function Header({ homepageName }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const HOMEPAGE_NAME = packageJson.config.homepageName;
 
   return (
     <header className="border-b border-border relative">
@@ -23,7 +25,7 @@ export function Header() {
             height={32}
             className="rounded-full"
           />
-          <span>{HOMEPAGE_NAME}</span>
+          <span>{homepageName}</span>
         </Link>
         
         {/* Desktop Navigation */}
