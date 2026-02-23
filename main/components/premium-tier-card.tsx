@@ -12,7 +12,11 @@ const markdownToHtml = (markdown: string) => {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
 
-  const withLinks = escaped.replace(
+  const withImages = escaped.replace(
+    /!\[([^\]]*)\]\((https?:\/\/[^\s)]+)\)/g,
+    '<img src="$2" alt="$1" class="mt-3 max-w-full rounded-lg border border-border" />',
+  );
+  const withLinks = withImages.replace(
     /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
     '<a href="$2" target="_blank" rel="noopener noreferrer" class="underline hover:text-foreground transition-colors">$1</a>',
   );
@@ -35,7 +39,7 @@ export function PremiumTierCard({ description }: PremiumTierCardProps) {
           <Ticket className="h-5 w-5" />
           Pay for the challenging tasks! 付费解决难度更高的任务！
         </h3>
-        <p
+        <div
           className="text-muted-foreground mb-4"
           dangerouslySetInnerHTML={{ __html: markdownToHtml(description) }}
         />

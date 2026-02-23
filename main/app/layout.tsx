@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-
+import packageJson from "../package.json";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 
@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Scaffold Movement AI Agent Worker",
-  description: "A ️scaffold based on x402 Protocol and Vibe Coding, is designed to generate AI Agent Workers.",
+  title: packageJson.config.homepageName,
+  description: packageJson.config.descriptionMarkdown,
   icons: {
     icon: "/avatar.png",
     shortcut: "/avatar.png",

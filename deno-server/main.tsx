@@ -139,23 +139,6 @@ router
       timestamp: new Date().toISOString(),
     };
   })
-  .get("/api/premium-content", (context) => {
-    // Premium content endpoint (protected by x402 paywall)
-    // one way: redirect to a web page
-    // context.response.status = 302;
-    // context.response.headers.set("Location", "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
-    // second way: return a JSON resp(Here is the example resp).
-    context.response.body = {
-      "coupon": "0x4C43e5c0a2DF68d2F2E5Df9f45b96963bE182187",
-      "privateKey": "0xfda5841cd51de62ea90a8d451d18524a17e4346a5ba64bc70e3d9bd2a2624b87",
-      "createdAt": "2025-12-21 10:44:32.949167+00",
-      // "fee": "3300000",
-      "fee_formated": "0.000001",
-      "fee_unit": "MOVE",
-      "issuer": "641f2ecf-a3d4-456d-ad58-39a2146e71db",
-      "if_used": false,
-    };
-  })
   .get("/docs", async (context) => {
     try {
       const readmeText = await Deno.readTextFile("./apidoc.md");
@@ -204,7 +187,56 @@ router
       context.response.body = { error: "Could not load documentation" };
     }
   })
-  ;
+  .post("/api/chat", async (context) => {
+    const apiKey = Deno.env.get("DASHSCOPE_API_KEY");
+    if (!apiKey) {
+      context.response.status = 500;
+      context.response.body = { error: "DASHSCOPE_API_KEY not configured" };
+      return;
+    }
+
+    const body = await context.request.body({ type: "json" }).value;
+    const messages = body.messages;
+    if (!messages || !Array.isArray(messages)) {
+      context.response.status = 400;
+      context.response.body = { error: "messages array is required" };
+      return;
+    }
+
+    try {
+      const resp = await fetch(
+        "https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: "qwen-plus",
+            messages,
+          }),
+        },
+      );
+
+      if (!resp.ok) {
+        const err = await resp.text();
+        console.error("DashScope API error:", err);
+        context.response.status = resp.status;
+        context.response.body = { error: "Chat API request failed", detail: err };
+        return;
+      }
+
+      const data = await resp.json();
+      const text = data.choices?.[0]?.message?.content ?? "";
+
+      context.response.body = { text };
+    } catch (err) {
+      console.error("Chat API error:", err);
+      context.response.status = 500;
+      context.response.body = { error: "Internal chat error" };
+    }
+  });
 
 // Initialize application
 const app = new Application();

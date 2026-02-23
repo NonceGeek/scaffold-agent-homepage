@@ -14,9 +14,8 @@ const TWITTER_NICENAME = packageJson.config.twitterNicename;
 const DESCRIPTION_MARKDOWN = packageJson.config.descriptionMarkdown;
 const FREE_TIER_DESCRIPTION = packageJson.config.freeTierDescription;
 const FREE_TIER_LINK = packageJson.config.freeTierLink;
-const AGENT_TAGS = ["Coder", "Web3er"];
-const PREMIUM_TIER_DESCRIPTION =
-  "For Example, you could submit the prompt like that:\n 例如，你可以像这样提交你的 Prompt：\n「Generate an online letter for my fans and record the number of visits, and deploy it to my domain: https://letter.leeduckgo.com.」";
+const AGENT_TAGS = packageJson.config.agentTags;
+const PREMIUM_TIER_DESCRIPTION = packageJson.config.premiumTierDescription;
 
 const markdownToHtml = (markdown: string) => {
   const escaped = markdown
