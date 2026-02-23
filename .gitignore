@@ -141,3 +141,8 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# TF-IDF index data
+*.jsonl
+*.npz
+*.joblib
